@@ -1,0 +1,19 @@
+.showHistory{
+  width: 100%;
+  table{
+    box-shadow: none;
+  }
+  tr {
+    background: #f5f5f5;
+    th, td{
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-family: sans-serif;
+      font-size: 13px;
+    }
+
+  }
+}
+.marginTop{
+  margin-top: 25px;
+}

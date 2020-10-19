@@ -1,0 +1,43 @@
+<mat-card *ngIf="result">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <h3>{{ amount }} {{ fromCurrency | uppercase }} = {{ result | number: '1.5-5' }}
+      {{ toCurrency | uppercase }}
+    </h3>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <p>
+      1 {{ fromCurrency | uppercase }}
+      =
+      {{ (+toRate / +fromRate) | number: '1.5-5' }} {{ toCurrency | uppercase }}
+    </p>
+    <p>
+      1 {{ toCurrency | uppercase }} = {{ (+fromRate / +toRate) | number: '1.5-5' }}
+      {{ fromCurrency | uppercase }}
+    </p>
+  </div>
+</mat-card>
+<div *ngIf="result" class="marginTop">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <h3>Historique des conversion</h3>
+  </div>
+  <table class="mat-elevation-z8 showHistory" cellSpacing="0">
+    <thead>
+      <tr>
+        <th> Taux réel </th>
+        <th> Taux saisi </th>
+        <th> Valeur initiale </th>
+        <th> valeur calculée </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let showH of showHist">
+          <td> {{ showH.rateReal }} </td>
+          <td> {{ showH.newRate }} </td>
+          <td> {{ showH.fromCurrencyRate.rate }} {{ showH.fromCurrencyRate.currency }} </td>
+          <td> {{ showH.toCurrencyRate.rate }} {{ showH.toCurrencyRate.currency }} </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
