@@ -1,4 +1,4 @@
-# CurrencyConverter
+# CurrencyConverter Euro / Dollar
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
 
@@ -25,14 +25,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Application functionalities
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Display a value that will represent the EUR / USD exchange rate. It will be initialized to 1.1.
+Every 3 seconds, a random value between -0.05 and +0.05 will be added or subtracted from the
+initial value.
+2. Create a front allowing you to enter an amount in EUR and display its value in USD on the
+exchange rate basis
+3. Set up regular polling allowing the USD part to be updated according to
+updating the exchange rate
+4. Add a switch allowing you to enter an amount in USD instead of the amount in EUR:
+at. Switch set to "EUR": the amount entered is in Euro, the value displayed is in USD
+b. Switch set to "USD": the amount entered is in dollars, the value displayed is in EUR
+5. Ensure the continuity of the values ​​(if the switch is activated, the new entry becomes the old one.
+exit)
+6. Add a history table for the last 5 conversion requests calculated. 
+Table will display the actual rate, the initial value with the associated currency and the calculated value
+with the associated currency.

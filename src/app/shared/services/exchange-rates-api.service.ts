@@ -8,21 +8,24 @@ import { ExchangeRates } from '../interfaces/exchange-rates';
 export class ExchangeRatesApiService {
   min = -0.05;
   max = 0.05;
-
-
-
-  randFloat() {
-    return parseFloat((Math.random() * (this.max - this.min) + this.min).toFixed(2));
-  };
-
-
+  tabHistory = [];
   currencies = {
     "base":"EUR",
     "rates":{
-       "EUR": 1.1,
-       "USD": 1.1
+      "EUR": 1.1,
+      "USD": 1.1
     }
   };
+
+  constructor() {
+    setInterval(() =>{
+      return this.getCurrencies();
+    }, 3000);
+  }
+
+  randFloat() {
+    return parseFloat((Math.random() * (this.max - this.min) + this.min).toFixed(2));
+  }
 
   getCurrencies() {
     this.currencies.rates = {
@@ -32,19 +35,19 @@ export class ExchangeRatesApiService {
     return this.currencies;
   }
 
-  constructor() {
-    setInterval(() =>{
-      return this.getCurrencies();
-    }, 3000);
-  }
-
   setBaseCurrencies(baseCurrencyCode){
      this.currencies.base = baseCurrencyCode;
      return this.getCurrencies();
   }
+
   getLatestExchangeRates(baseCurrencyCode): Observable<ExchangeRates> {
     return of(this.setBaseCurrencies(baseCurrencyCode));
   }
 
+  showHistoryConversion(pushHistory):any{
+    pushHistory.rates = this.getCurrencies().rates;
+    this.tabHistory.push(pushHistory)
+    return of([...this.tabHistory])
+  }
 
 }

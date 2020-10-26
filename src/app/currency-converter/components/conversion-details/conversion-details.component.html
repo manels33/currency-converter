@@ -17,27 +17,34 @@
     </p>
   </div>
 </mat-card>
-<div *ngIf="result" class="marginTop">
-  <div fxLayout="row" fxLayoutAlign="center">
+<div *ngIf="dataSource">
+  <div class="title" fxLayout="row" fxLayoutAlign="center">
     <h3>Historique des conversion</h3>
   </div>
-  <table class="mat-elevation-z8 showHistory" cellSpacing="0">
-    <thead>
-      <tr>
-        <th> Taux réel </th>
-        <th> Taux saisi </th>
-        <th> Valeur initiale </th>
-        <th> valeur calculée </th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let showH of showHist">
-          <td> {{ showH.rateReal }} </td>
-          <td> {{ showH.newRate }} </td>
-          <td> {{ showH.fromCurrencyRate.rate }} {{ showH.fromCurrencyRate.currency }} </td>
-          <td> {{ showH.toCurrencyRate.rate }} {{ showH.toCurrencyRate.currency }} </td>
-        </tr>
-    </tbody>
+  <div fxLayoutAlign="center">
+    <h4>Les 5 derniéres conversions</h4>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="rateReal">
+      <th mat-header-cell *matHeaderCellDef> Taux réel </th>
+      <td mat-cell *matCellDef="let row"> {{row.rateInit | number: '1.5-5'}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="valInit">
+      <th mat-header-cell *matHeaderCellDef> Valeur initiale </th>
+      <td mat-cell *matCellDef="let row"> {{ row.amount }} {{ row.fromCurrencyRate.currency | uppercase }} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="valCalc">
+      <th mat-header-cell *matHeaderCellDef> Valeur calculée </th>
+      <td mat-cell *matCellDef="let row">  {{ row.result | number: '1.5-5' }} {{ row.toCurrencyRate.currency | uppercase }} </td>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
   </table>
 </div>
 

@@ -30,7 +30,6 @@ export class CurrencyConverterComponent implements OnInit {
   isLoading = true;
   formNames = FormNames;
 
-  showHistory = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,14 +75,7 @@ export class CurrencyConverterComponent implements OnInit {
       this.fromCurrencyRate && this.fromCurrencyRate.rate,
       this.toCurrencyRate && this.toCurrencyRate.rate
     );
-
-    this.showHistory.push({
-      rateReal: 1.1,
-      newRate: 1.2,//provisoire
-      fromCurrencyRate: this.fromCurrencyRate,
-      toCurrencyRate: this.toCurrencyRate
-    })
-  }
+  };
 
   swapCurrencies() {
     this.currencyConverterForm = this.formBuilder.group({
@@ -212,7 +204,7 @@ export class CurrencyConverterComponent implements OnInit {
       option.toLowerCase().includes(filterValueLowercase)
     );
   }
-0
+
   private filterSelectedValue(currencyCode: string): MappedCurrencyRate {
     return this.currencyExchangeService.exchangeRates.find(
       (item: MappedCurrencyRate) => {
@@ -224,4 +216,5 @@ export class CurrencyConverterComponent implements OnInit {
   private calculateExchangeRate(fromRate: number, toRate: number): string {
     return ((this.amount * toRate) / fromRate).toFixed(5);
   }
+
 }

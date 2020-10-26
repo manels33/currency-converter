@@ -1,19 +1,19 @@
-.showHistory{
-  width: 100%;
-  table{
-    box-shadow: none;
-  }
-  tr {
-    background: #f5f5f5;
-    th, td{
-      border: 1px solid #ccc;
-      padding: 10px;
-      font-family: sans-serif;
-      font-size: 13px;
-    }
-
+table{
+  width: 80%;
+  margin: auto;
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    border-bottom-width: 0;
+    width:30%;
   }
 }
-.marginTop{
-  margin-top: 25px;
+.title{
+  h3{
+    background: #007d8f;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 19px;
+    padding: 15px;
+  }
 }
