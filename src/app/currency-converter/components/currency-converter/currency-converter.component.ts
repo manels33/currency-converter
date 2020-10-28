@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
 import { MappedCurrencyRate } from 'src/app/shared/interfaces/currency-rate';
 import { CurrencyExchangeService } from 'src/app/shared/services/currency-exchange.service';
 import { ExchangeRatesApiService } from 'src/app/shared/services/exchange-rates-api.service';
@@ -34,16 +33,13 @@ export class CurrencyConverterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private currencyExchangeService: CurrencyExchangeService,
-    private exchangeRatesApiService: ExchangeRatesApiService,
-    private route: ActivatedRoute
+    private exchangeRatesApiService: ExchangeRatesApiService
   ) {}
 
   ngOnInit() {
 
-    const baseCurrency =
-      this.route.snapshot.paramMap.get('from') || Currency.EUR;
-    const quoteCurrency =
-      this.route.snapshot.paramMap.get('to') || Currency.USD;
+    const baseCurrency = Currency.EUR;
+    const quoteCurrency = Currency.USD;
 
     this.currencyConverterForm = this.initForm(baseCurrency, quoteCurrency);
 
@@ -76,6 +72,22 @@ export class CurrencyConverterComponent implements OnInit {
       this.toCurrencyRate && this.toCurrencyRate.rate
     );
   };
+
+  updateRateFrom(newRateFrom:number):void{
+    console.log("newRateFrom",newRateFrom);
+    this.result = this.calculateExchangeRate(
+      newRateFrom,
+      this.toCurrencyRate && this.toCurrencyRate.rate
+    );
+  }
+
+  updateRateTo(newRateTo:number):void{
+    console.log("newRateTo", newRateTo);
+    this.result = this.calculateExchangeRate(
+      this.fromCurrencyRate && this.fromCurrencyRate.rate,
+      newRateTo
+    );
+  }
 
   swapCurrencies() {
     this.currencyConverterForm = this.formBuilder.group({

@@ -1,7 +1,10 @@
 .converter-container {
   margin: 5%;
   padding: 25px;
-
+  .text-right{
+    float: right;
+    font-size: 18px;
+  }
   .converter-btn {
     padding-bottom: 1.34375em;
   }

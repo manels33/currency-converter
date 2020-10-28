@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExchangeRatesApiService } from 'src/app/shared/services/exchange-rates-api.service';
 
@@ -16,12 +16,19 @@ export class ConversionDetailsComponent implements OnChanges {
   @Input() fromCurrencyRate: MappedCurrencyRate;
   @Input() toCurrencyRate: MappedCurrencyRate;
 
+  @Output() sendNewRateFrom = new EventEmitter();
+  @Output() sendNewRateTo = new EventEmitter();
+
   fromCurrency: string;
   toCurrency: string;
 
   toRate: number;
   fromRate: number;
-
+  rateNewFrom:number;
+  rateNewTo:number;
+  fixRFrom: number;
+  fixRTo: number;
+  newHistory: {};
   dataSource = new MatTableDataSource();
   displayedColumns = ['rateReal', 'valInit', 'valCalc'];
   array_last_five: [];
@@ -54,13 +61,37 @@ export class ConversionDetailsComponent implements OnChanges {
     this.toCurrency = this.toCurrencyRate && this.toCurrencyRate.currency;
     this.toRate = this.toCurrencyRate && this.toCurrencyRate.rate;
 
-    newHistory = {
-      "rateInit":(+this.toRate / +this.fromRate),
+    this.rateNewFrom = parseFloat((+this.toRate / +this.fromRate).toFixed(5));
+    this.fixRFrom = this.rateNewFrom;
+
+    this.rateNewTo = parseFloat((+this.fromRate / +this.toRate).toFixed(5));
+    this.fixRTo = this.rateNewTo;
+
+    this.newHistory = {
+      "rateInit": parseFloat((+this.toRate / +this.fromRate).toFixed(5)),
       "fromCurrencyRate": this.fromCurrencyRate,
       "toCurrencyRate": this.toCurrencyRate,
       "amount": this.amount,
       "result": this.result
     };
-    this.getHistoryTab(newHistory);
+    this.getHistoryTab(this.newHistory);
+  }
+
+  onFixRateFrom(newRate):void{
+    if((newRate - this.fixRFrom) <= 2 ) {
+      this.rateNewFrom = newRate;
+    } else {
+      this.rateNewFrom = this.fixRFrom;
+    };
+    this.sendNewRateFrom.emit(this.rateNewFrom);
+  }
+
+  onFixRateTo(newRate):void{
+    if((newRate - this.fixRTo) <= 2 ) {
+      this.rateNewTo = newRate;
+    } else {
+      this.rateNewTo = this.fixRTo;
+    };
+    this.sendNewRateTo.emit(this.rateNewTo);
   }
 }
